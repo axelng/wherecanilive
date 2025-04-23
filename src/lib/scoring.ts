@@ -10,6 +10,18 @@ interface UserInput {
   income: number;
 }
 
+interface City {
+  avg_rent_1br: number;
+  transit_score: number;
+  walk_score: number;
+  green_space_score: number;
+  future_growth_index: number;
+}
+
+interface UserInput {
+  income: number;
+}
+
 export function scoreLocation(city: City, userInput: UserInput) {
     const affordability = userInput.income / (12 * city.avg_rent_1br);
     const growthScore = city.future_growth_index || 1;
