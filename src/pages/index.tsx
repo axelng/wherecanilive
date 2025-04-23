@@ -1,3 +1,4 @@
+import Link from 'next/link';
 export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
@@ -7,12 +8,15 @@ export default function Home() {
           Type your life. Find your place.
           A new way to explore housing, cost of living, and future planning.
         </p>
-        <a
-          href="/map"
-          className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800"
-        >
-          Get Started
-        </a>
+        import Link from 'next/link';
+
+// ...
+
+<Link href="/map">
+  <span className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 inline-block">
+    Get Started
+  </span>
+</Link>
       </div>
     </div>
   );
