@@ -1,0 +1,20 @@
+[
+    {
+      "city_id": "ottawa_on",
+      "name": "Ottawa",
+      "avg_rent_1br": 1320,
+      "transit_score": 87,
+      "walk_score": 78,
+      "green_space_score": 62,
+      "future_growth_index": 1.25
+    },
+    {
+      "city_id": "halifax_ns",
+      "name": "Halifax",
+      "avg_rent_1br": 1180,
+      "transit_score": 69,
+      "walk_score": 72,
+      "green_space_score": 74,
+      "future_growth_index": 1.15
+    }
+  ]
