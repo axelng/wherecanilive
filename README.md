@@ -56,4 +56,4 @@ This project is in MVP stage — feedback, ideas, and collaborators welcome!
 
 ## 🧑‍💻 Author
 
-Built by [axelng](https://github.com/axelng) and powered by ideas with [Numa]
+Built by [axelng](https://github.com/axelng) 
