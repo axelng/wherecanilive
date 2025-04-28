@@ -11,11 +11,12 @@ export default function Home() {
           living, and future planning. It&rsquo;s fast and it&rsquo;s smart.
         </p>
 
-        <Link href="/map">
-          <span className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 inline-block">
-            Get Started
-          </span>
-        </Link>
+        <Link
+  href="/map"
+  className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 inline-block"
+>
+  Get Started
+</Link>
       </div>
     </div>
   );
