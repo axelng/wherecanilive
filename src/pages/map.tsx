@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import CityTable from '../components/CityTable';
 import { scoreLocation } from '../lib/scoring';
 
 interface City {
@@ -9,6 +10,7 @@ interface City {
   walk_score: number;
   green_space_score: number;
   future_growth_index: number;
+  // if you later add lat/lon for Mapbox, include them here
 }
 
 export default function MapView() {
@@ -16,6 +18,7 @@ export default function MapView() {
   const [scores, setScores] = useState<{ [key: string]: number }>({});
   const [income, setIncome] = useState(60000);
 
+  /* ─────────────────── Fetch city list ─────────────────── */
   useEffect(() => {
     async function fetchCities() {
       const res = await fetch('/api/locations');
@@ -25,6 +28,7 @@ export default function MapView() {
     fetchCities();
   }, []);
 
+  /* ─────────────────── Re-score when income or cities change ─────────────────── */
   useEffect(() => {
     const newScores = cities.reduce((acc, city) => {
       acc[city.city_id] = scoreLocation(city, { income });
@@ -33,10 +37,12 @@ export default function MapView() {
     setScores(newScores);
   }, [cities, income]);
 
+  /* ─────────────────────────── UI ─────────────────────────── */
   return (
     <div className="min-h-screen bg-white p-6">
       <h1 className="text-3xl font-semibold mb-4">Explore Your Options</h1>
 
+      {/* Income slider */}
       <div className="mb-6">
         <label
           htmlFor="income"
@@ -46,28 +52,27 @@ export default function MapView() {
         </label>
         <input
           id="income"
-          type="number"
+          type="range"
+          min={20000}
+          max={200000}
+          step={5000}
           value={income}
-          onChange={(e) => setIncome(Number(e.target.value))}
-          className="border border-gray-300 rounded px-4 py-2 w-60 focus:outline-none focus:ring-2 focus:ring-black"
+          onChange={e => setIncome(Number(e.target.value))}
+          className="w-60"
         />
+        <span className="ml-3 font-mono">{income.toLocaleString()}</span>
       </div>
 
-      <div className="space-y-4">
-        {cities.map((city) => (
-          <div key={city.city_id} className="p-4 border rounded shadow-sm">
-            <h2 className="text-xl font-bold">{city.name}</h2>
-            <p className="text-gray-600">
-              Score:&nbsp;
-              <span className="font-mono">{scores[city.city_id]}</span>
-            </p>
-            <p className="text-sm text-gray-500">
-              Avg&nbsp;Rent&nbsp;(1 br): ${city.avg_rent_1br} | Transit:&nbsp;
-              {city.transit_score} | Walk:&nbsp;{city.walk_score}
-            </p>
-          </div>
-        ))}
-      </div>
+      {/* Sortable table */}
+      <CityTable
+        rows={cities.map(c => ({
+          city: c.name,
+          score: scores[c.city_id] ?? 0,
+          rent: c.avg_rent_1br,
+          transit: c.transit_score,
+          walk: c.walk_score,
+        }))}
+      />
     </div>
   );
 }
